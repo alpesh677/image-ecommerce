@@ -27,6 +27,8 @@ export default function Login() {
             router.push("/");
         }
     }
+
+    
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
 			<div className="w-full max-w-md space-y-8 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl transform transition-all hover:scale-105 duration-300">
