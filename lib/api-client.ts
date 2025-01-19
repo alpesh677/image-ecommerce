@@ -3,7 +3,7 @@ import { IImageVariant, IProduct } from "@/models/Product.model";
 import { Types } from "mongoose";
 
 export type productFormData = Omit<IProduct, "_id">;
-type fetchOptions = {
+type FetchOptions = {
 	method?: "GET" | "POST" | "PUT" | "DELETE";
 	body?: any;
 	headers?: Record<string, string>;
@@ -17,15 +17,16 @@ export interface createOrderData {
 class ApiClient {
 	private async fetch<T>(
 		endpoint: string,
-		options: fetchOptions = {},
+		options: FetchOptions = {},
 	): Promise<T> {
-		const { method = "GET", body, headers } = options;
+		const { method = "GET", body, headers = {} } = options;
 
 		const defaultHeaders = {
 			"Content-Type": "application/json",
 			...headers,
 		};
-		const response = await fetch(`api/${endpoint}`, {
+
+		const response = await fetch(`/api${endpoint}`, {
 			method,
 			headers: defaultHeaders,
 			body: body ? JSON.stringify(body) : undefined,

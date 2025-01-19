@@ -9,6 +9,7 @@ import { Home, Sun, User } from "lucide-react";
 export default function Header() {
 	const { data: session } = useSession();
 
+	console.log("session in headers ",session)
 	const handleSignOut = async () => {
 		try {
 			await signOut();

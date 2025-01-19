@@ -1,17 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
+import mongoose from "mongoose";
 import { connectToDB } from "@/lib/db";
 import Product from "@/models/Product.model";
 
 export async function GET(
 	request: NextRequest,
-	props: { params: Promise<{ id: string }> },
+	{ params }: { params: { id: string } },
 ) {
 	try {
-		const id = await props.params;
+		const { id } = params;
+
+		if (!mongoose.Types.ObjectId.isValid(id)) {
+			return NextResponse.json(
+				{ error: "Invalid product ID" },
+				{ status: 400 },
+			);
+		}
+
 		await connectToDB();
 
 		const product = await Product.findById(id).lean();
-
+		console.log("Product in API call:", product);
 		if (!product) {
 			return NextResponse.json(
 				{ error: "Product not found" },

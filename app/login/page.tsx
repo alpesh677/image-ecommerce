@@ -1,4 +1,6 @@
 'use client'
+
+
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -19,6 +21,7 @@ export default function Login() {
             password,
             redirect: false
         });
+		console.log("SignIn Result:", result);
 
         if(result?.error) {
             toast.error(result.error);

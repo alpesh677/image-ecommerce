@@ -77,6 +77,6 @@ const orderSchema = new Schema({
     previewURL : {type : String},
 },{timestamps : true});
 
-const Product = mongoose.models?.Product || mongoose.model<IOrder>("Product", orderSchema);
+const Order = mongoose.models?.Order || mongoose.model<IOrder>("Order", orderSchema);
 
-export default Product;
+export default Order;

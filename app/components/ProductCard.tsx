@@ -7,6 +7,8 @@ import Link from "next/link";
 import React from "react";
 
 export default function ProductCard({ product }: { product: IProduct }) {
+
+	console.log(`PRODUCT CARD PAGE: ${typeof product._id}`);
 	const lowestPrice = product.variants.reduce(
 		(min, variant) => (variant.price < min ? variant.price : min),
 		product.variants[0].price,

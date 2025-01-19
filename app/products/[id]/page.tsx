@@ -9,7 +9,6 @@ import {
 } from "@/models/Product.model";
 import { IKImage } from "imagekitio-next";
 import { AlertCircle, ImageIcon, Loader2 } from "lucide-react";
-import { set } from "mongoose";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -36,8 +35,19 @@ export default function ProductPage() {
 				return;
 			}
 
+			console.log("ID IN PRODUCT ID PAGE", id);
+
 			try {
-				const data = await apiClient.getProduct(id.toString());
+				const response = await fetch(`/api/products/${id}`);
+				if (response.status === 404) {
+					throw new Error("Product not found");
+				}
+				if (response.status === 431) {
+					throw new Error("Request header too large");
+				}
+
+				const data = await response.json();
+				console.log("DATA IN PRODUCT ID PAGE", data);
 				setProduct(data);
 			} catch (error) {
 				console.error("Error fetching product:", error);
@@ -46,6 +56,8 @@ export default function ProductPage() {
 						? error.message
 						: "Failed to load product",
 				);
+			} finally {
+				setIsLoading(false); // Always stop loading
 			}
 		};
 
@@ -134,8 +146,14 @@ export default function ProductPage() {
 						className="relative rounded-lg overflow-hidden"
 						style={{
 							aspectRatio: selectedVariant
-								? `IMAGE_VARIANTS.${selectedVariant.type}.dimension.width / IMAGE_VARIANTS.${selectedVariant.type}.dimension.height`
-								: "1:1",
+								? `${
+										IMAGE_VARIANTS[selectedVariant.type]
+											.dimension.width
+								} / ${
+										IMAGE_VARIANTS[selectedVariant.type]
+											.dimension.height
+								}`
+								: "1 / 1",
 						}}
 					>
 						<IKImage
