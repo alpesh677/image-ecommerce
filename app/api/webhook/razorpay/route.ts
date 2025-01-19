@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 		const signature = req.headers.get("x-razorpay-signature");
 
 		const expectedSignature = crypto
-			.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+			.createHmac("sha256", process.env.RAZORPAY_WEBHOOK_SECRET!)
 			.update(body)
 			.digest("hex");
 
@@ -27,33 +27,37 @@ export async function POST(req: NextRequest) {
 		if (event.event === "payment.captured") {
 			const payment = event.payload.payment.entity;
 
-			const order = await Order.findByIdAndUpdate(
-				{ razorpayOrderId: payment.order_id },
-				{ razorpayPaymentId: payment.id, status: "COMPLETED" },
+			console.log("Payment captured:", payment);
+
+			const order = await Order.findOneAndUpdate(
+				{ razorpayOrderId: payment.order_id }, // Query by Razorpay order ID
+				{ razorpayPaymentId: payment.id, status: "COMPLETED" }, // Update fields
+				{ new: true }, // Return the updated document
 			).populate([
 				{ path: "productID", select: "name" },
 				{ path: "userID", select: "email" },
 			]);
 
+
+			console.log("ORDER IN PAYMENT CAPTURED", order);
 			if (order) {
 				const transporter = nodemailer.createTransport({
-					host: "live.smtp.mailtrap.io",
-					port: 587,
+					service: "gmail",
 					auth: {
-						user: process.env.MAILTRAP_USER,
-						pass: process.env.MAILTRAP_PASS,
+						user: process.env.SMTP_USER,
+						pass: process.env.SMTP_PASS,
 					},
 				});
 				await transporter.sendMail({
-					from: '"ImageKit Shop" <noreply@imagekitshop.com>',
-					to: order.userId.email,
+					from: '"ImageKit Shop" <noreply@gmail.com>',
+					to: payment.email,
 					subject: "Payment Confirmation - ImageKit Shop",
 					text: `
                                 Thank you for your purchase!
         
                                 Order Details:
                                 - Order ID: ${order._id.toString().slice(-6)}
-                                - Product: ${order.productId.name}
+                                - Product: ${order.productID.name}
                                 - Version: ${order.variant.type}
                                 - License: ${order.variant.license}
                                 - Price: $${order.amount.toFixed(2)}

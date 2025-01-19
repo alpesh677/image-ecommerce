@@ -79,8 +79,12 @@ export default function ProductPage() {
 		try {
 			const { orderID, amount } = await apiClient.createOrder({
 				variant,
-				productID: product._id,
+				productId: product._id,
 			});
+
+			console.log("ORder ID in handle purchase", orderID);
+			console.log("Product ID in handle purchase", product._id);
+
 
 			const options = {
 				key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,

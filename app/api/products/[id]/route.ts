@@ -3,12 +3,9 @@ import mongoose from "mongoose";
 import { connectToDB } from "@/lib/db";
 import Product from "@/models/Product.model";
 
-export async function GET(
-	request: NextRequest,
-	{ params }: { params: { id: string } },
-) {
+export async function GET(request: NextRequest, context: { params: { id: string } }) {
 	try {
-		const { id } = params;
+		const { id } = await context.params;
 
 		if (!mongoose.Types.ObjectId.isValid(id)) {
 			return NextResponse.json(
@@ -20,7 +17,7 @@ export async function GET(
 		await connectToDB();
 
 		const product = await Product.findById(id).lean();
-		console.log("Product in API call:", product);
+		// console.log("Product in API call:", product);
 		if (!product) {
 			return NextResponse.json(
 				{ error: "Product not found" },

@@ -30,52 +30,54 @@ export interface IOrder {
     updatedAt? : Date
 }
 
-const orderSchema = new Schema({
-    userID : {
-        type : mongoose.Types.ObjectId,
-        ref : "User",
-        required : true
-    },
-    productID : {
-        type : mongoose.Types.ObjectId,
-        ref : "Product",
-        required : true
-    },
-    variant : {
-        type : String,
-        required : true,
-        enum : ["SQUARE", "WIDE", "PORTRAIT"] as ImageVariantType[],
-        set: (v:string) => v.toUpperCase()
-    },
-    price : {
-        type : Number,
-        required : true
-    },
-    license:{
-        type : String,
-        required : true,
-        enum : ["personal", "commercial"]
-    },
-    razorpayOrderId : {
-        type : String,
-        required : true
-    },
-    razorpayPaymentId : {
-        type : String
-    },
-    amount : {
-        type : Number,
-        required : true
-    },
-    status : {
-        type : String,
-        required : true,
-        enum : ["PENDING", "COMPLETED", "FAILED"],
-        default : "PENDING"
-    },
-    downloadURL : {type : String},
-    previewURL : {type : String},
-},{timestamps : true});
+const orderSchema = new Schema(
+	{
+		userID: {
+			type: mongoose.Types.ObjectId,
+			ref: "User",
+			required: true,
+		},
+		productID: {
+			type: mongoose.Types.ObjectId,
+			ref: "Product",
+			required: true,
+		},
+		variant: {
+			type: {
+				type: String,
+				required: true,
+				enum: ["SQUARE", "WIDE", "PORTRAIT"] as ImageVariantType[],
+				set: (v: string) => v.toUpperCase(),
+			},
+			price: { type: Number, required: true },
+			license: {
+				type: String,
+				required: true,
+				enum: ["personal", "commercial"],
+			},
+		},
+		razorpayOrderId: {
+			type: String,
+			required: true,
+		},
+		razorpayPaymentId: {
+			type: String,
+		},
+		amount: {
+			type: Number,
+			required: true,
+		},
+		status: {
+			type: String,
+			required: true,
+			enum: ["PENDING", "COMPLETED", "FAILED"],
+			default: "PENDING",
+		},
+		downloadURL: { type: String },
+		previewURL: { type: String },
+	},
+	{ timestamps: true },
+);
 
 const Order = mongoose.models?.Order || mongoose.model<IOrder>("Order", orderSchema);
 

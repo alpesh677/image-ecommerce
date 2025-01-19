@@ -29,14 +29,14 @@ export const authOptions: NextAuthOptions = {
 					throw new Error("Missing credentials");
 				}
 
-				console.log("Email:", credentials.email);
+				// console.log("Email:", credentials.email);
 
 				try {
 					await connectToDB();
 					const user = await User.findOne({
 						email: credentials.email,
 					});
-					console.log("User fetched:", user);
+					// console.log("User fetched:", user);
 
 					if (!user) {
 						throw new Error("User not found");
@@ -46,7 +46,7 @@ export const authOptions: NextAuthOptions = {
 						credentials.password,
 						user.password,
 					);
-					console.log("Password valid:", isValid);
+					// console.log("Password valid:", isValid);
 
 					if (!isValid) {
 						throw new Error("Invalid password");
@@ -65,21 +65,21 @@ export const authOptions: NextAuthOptions = {
 	],
 	callbacks: {
 		async jwt({ token, user }) {
-            console.log("JWT Callback - Token:", token, "User:", user);
 			if (user) {
 				token.id = user.id;
 				token.role = user.role;
+				// console.log("JWT Callback - Token:", token, "User:", user);
 			}
 			return token;
 		},
 		async session({ session, token }) {
             if (session.user) {
-                console.log(
-                    "Session Callback - Session:",
-                    session,
-                    "Token:",
-                    token,
-                );
+                // console.log(
+                //     "Session Callback - Session:",
+                //     session,
+                //     "Token:",
+                //     token,
+                // );
 				session.user.id = token.id as string;
 				session.user.role = token.role as string;
 			}
