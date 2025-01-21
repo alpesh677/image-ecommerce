@@ -14,7 +14,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
 		product.variants[0].price,
 	);
 	return (
-		<div className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-all duration-300">
+		<div className="bg-white dark:bg-[#1e1e1e] rounded-lg shadow hover:shadow-lg transition-all duration-300 dark:hover:shadow-sky-500/20">
 			<div className="relative p-4">
 				<Link
 					href={`/products/${product._id}`}
@@ -73,7 +73,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
 
 					<Link
 						href={`/products/${product._id}`}
-						className="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300"
+						className="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-[#4f4fdc] rounded-md hover:bg-[#6c63e1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300"
 					>
 						<Eye className="w-4 h-4 mr-2" />
 						View Options

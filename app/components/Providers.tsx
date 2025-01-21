@@ -23,10 +23,14 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     }
 
     return (
-        <SessionProvider>
-            <ImageKitProvider urlEndpoint={urlEndpoint} publicKey={publicKey} authenticator={authenticator}>
-                {children}
-            </ImageKitProvider>
-        </SessionProvider>
-    );
+		<SessionProvider>
+			<ImageKitProvider
+				urlEndpoint={urlEndpoint}
+				publicKey={publicKey}
+				authenticator={authenticator}
+			>
+				{children}
+			</ImageKitProvider>
+		</SessionProvider>
+	);
 }

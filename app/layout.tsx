@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import Script from "next/script";
 import Providers from "./components/Providers";
 import Header from "./components/Header";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -29,17 +30,23 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-[#000000] text-gray-900 dark:text-gray-100 transition-colors duration-300`}
 			>
 				<Script
 					src="https://checkout.razorpay.com/v1/checkout.js"
 					strategy="lazyOnload"
 				/>
 				<Providers>
-					<Header />
-					<main className="container mx-auto px-4 py-8">
-						{children}
-					</main>
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+					>
+						<Header />
+						<main className="container mx-auto px-4 py-8">
+							{children}
+						</main>
+					</ThemeProvider>
 				</Providers>
 				<Toaster
 					richColors

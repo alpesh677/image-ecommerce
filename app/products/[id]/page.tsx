@@ -153,10 +153,10 @@ export default function ProductPage() {
 								? `${
 										IMAGE_VARIANTS[selectedVariant.type]
 											.dimension.width
-								} / ${
+								  } / ${
 										IMAGE_VARIANTS[selectedVariant.type]
 											.dimension.height
-								}`
+								  }`
 								: "1 / 1",
 						}}
 					>
@@ -200,7 +200,7 @@ export default function ProductPage() {
 					</div>
 
 					<div className="space-y-4">
-						<h2 className="text-xl font-semibold">
+						<h2 className="text-xl font-semibold text-[#1D7AFC]">
 							Available Versions
 						</h2>
 						{product.variants.map((variant) => (
@@ -213,10 +213,10 @@ export default function ProductPage() {
 								}`}
 								onClick={() => setSelectedVariant(variant)}
 							>
-								<div className="flex flex-col space-y-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-4">
+								<div className="flex flex-col space-y-4 bg-white dark:bg-[#1e1e1e] text-gray-900 dark:text-white p-4">
 									<div className="flex justify-between items-center">
 										<div className="flex items-center gap-3">
-											<ImageIcon className="w-5 h-5" />
+											<ImageIcon className="w-7 h-7 text-[#4c3ced]" />
 											<div>
 												<h3 className="font-semibold">
 													{
@@ -243,11 +243,11 @@ export default function ProductPage() {
 											</div>
 										</div>
 										<div className="flex items-center gap-4">
-											<span className="text-xl font-bold">
+											<span className="text-xl font-bold text-[#2ABB7F]">
 												${variant.price.toFixed(2)}
 											</span>
 											<button
-												className="btn btn-primary btn-sm"
+												className="bg-[#E56910] p-2 rounded-3xl text-white font-semibold"
 												onClick={(e) => {
 													e.stopPropagation();
 													handlePurchase(variant);
@@ -261,9 +261,9 @@ export default function ProductPage() {
 							</div>
 						))}
 					</div>
-					<div className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg">
+					<div className="bg-gray-100 dark:bg-[#1e1e1e] rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg">
 						<div className="p-6">
-							<h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+							<h3 className="text-lg font-semibold mb-4 text-[#1D7AFC] dark:text-white">
 								License Information
 							</h3>
 							<ul className="space-y-3">
