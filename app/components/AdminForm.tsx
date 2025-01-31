@@ -1,5 +1,5 @@
 "use client";
-import { apiClient, productFormData } from "@/lib/api-client";
+import { apiClient, ProductFormData } from "@/lib/api-client";
 import { ImageVariantType, IMAGE_VARIANTS } from "@/models/Product.model";
 import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -16,7 +16,7 @@ export default function AdminForm() {
 		setValue,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<productFormData>({
+	} = useForm<ProductFormData>({
 		defaultValues: {
 			name: "",
 			description: "",
@@ -41,7 +41,7 @@ export default function AdminForm() {
 		toast.success("Image uploaded successfully");
 	};
 
-	const submit = async (data: productFormData) => {
+	const submit = async (data: ProductFormData) => {
 		setLoading(true);
 
 		try {
